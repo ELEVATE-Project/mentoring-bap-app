@@ -1,0 +1,263 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+:root {
+  --ion-default-font: "NotoSans-Regular";
+  --ion-font-family: "NotoSans-Regular";
+  --ion-color-primary: #832215;
+  --red: rgb(255, 0, 0);
+  --white:#fff;
+  --black:#000;
+  --gray:#ccc;
+  --light-gray:#f4f2f2;
+  --dark-gray:#6a6a6a;
+  --yellow:#ffab00;
+  --quill-grey:#cac7c1;
+  --grey-shade:#686762;
+  --grey-medium:#4a4f57;
+  --dark-grey:rgb(49, 52, 59);
+  --green: rgb(20, 189, 20);
+  input:-webkit-autofill {
+    height: 0px;
+    -webkit-box-shadow:0 0 0 10px white inset;
+    box-shadow: 0 0 0 10px white inset;
+    -webkit-text-fill-color: black;
+    font-weight: 500px;
+}
+
+input:-webkit-autofill:focus {
+    height: 0px;
+    -webkit-box-shadow: 0 0 0 10px white inset;
+    box-shadow: 0 0 0 10px white inset;
+    -webkit-text-fill-color: black;
+    font-weight: 500px;
+} 
+
+}
+
+//flex
+.d-flex {
+  display: flex;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-inline-flex{
+  display: inline-flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+h6, h5 , h4, h3, h2, h1 {
+  font-family: "NotoSans-Bold";
+}
+
+.header-md::after{
+  background-image:none ;
+}
+.flex-justify-center {
+  justify-content: center;
+}
+.flex-justify-start {
+  justify-content: start;
+}
+
+.flex-justify-space-between {
+  justify-content: space-between;
+}
+.flex-justify-space-around {
+  justify-content: space-around;
+}
+.flex-justify-flex-end {
+  justify-content: flex-end;
+}
+.flex-align-items-center{
+  align-items: center;
+}
+.flex-align-items-flex-start{
+  align-items:flex-start;
+}
+.flex-align-items-flex-end{
+  align-items:flex-end;
+}
+
+//margins
+.my-4 {
+  margin: 4px 0;
+}
+.my-10 {
+  margin: 10px 0;
+}
+.my-30 {
+  margin: 30px 0;
+}
+.my-20 {
+  margin: 20 0;
+}
+.my-50 {
+  margin: 50px 0;
+}
+
+.mx-10 {
+  margin:0 10px;
+}
+
+.mx-0 {
+  margin-left: 0;
+  margin-right: 0;
+}
+//padding
+.p-20{
+  padding: 20px;
+}
+.padding-top-10{
+  padding-top: 15px !important;
+}
+
+.header-md::after {
+  background-image: none;
+}
+
+.header-bottom-border {
+  background-color: var( --ion-color-primary);
+  color: white;
+  margin-top: 0;
+  border-bottom-left-radius: 30px;
+}
+ion-card-title{
+  font-size: 18px;
+}
+.ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ion-button{
+  text-transform:none;
+}
+
+.flex-box {
+  display: flex;
+  align-items: center;
+}
+
+.btn-valid {
+  ion-button {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: none;
+    // margin: 0 15px;
+  }
+}
+
+.btn-disabled {
+  ion-button {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: none;
+    --background: var(--quill-grey);
+    --color: var(--black);
+   }
+}
+
+.alert-button-group.sc-ion-alert-md{
+  display: flex;
+}
+.alert-wrapper.sc-ion-alert-md{
+  border-radius: 8px;
+}
+.alert-button-white.sc-ion-alert-md{
+  text-transform: none !important;
+  background-color: var(--white);
+  border: 1px solid #b8b8b8;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 6px 21px;
+}
+.alert-button-red.sc-ion-alert-md{
+  text-transform: none !important;
+  background-color: var(--ion-color-primary);
+  color: var(--white);
+  border: 1px solid #b8b8b8;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 6px 21px;
+}
+.links{
+  text-decoration: none;
+  color: blue !important;
+}
+
+.ellipsis{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  font-size: large;
+  white-space: nowrap;
+}
+
+.onboard-button{
+  width: 80%;
+  height: 46px;
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: none;
+}
+
+.text-green{
+  color: rgb(58, 199, 15);
+}
+.chip-label{
+  overflow:visible !important;
+}
+.star-icon-red{
+  color: red;
+  font-size: 13px;
+}
+ion-modal.stack-modal {
+  --background: rgba(0, 0, 0, 0.5) !important;
+  .ion-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.card-shadow-bottom{
+  box-shadow: 2px 2px 10px 2px var(--gray);    
+}
+ion-accordion-group{
+  ion-accordion {
+      .ion-accordion-toggle-icon {
+          font-size: 30px;
+          color: grey;
+      }
+  }
+}

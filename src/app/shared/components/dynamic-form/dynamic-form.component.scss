@@ -1,0 +1,71 @@
+app-input-chip {
+  width: 100%;
+}
+
+ion-item {
+  margin: 0;
+  --border-width: 0;
+  --border-color: #ffffff00; // transparent
+  border-bottom: 1.9px solid var(--color);
+
+  ion-input {
+    caret-color: black !important;
+  }
+
+  ion-textarea {
+    caret-color: black !important;
+  }
+}
+:host {
+  .item-interactive.ion-invalid {
+    --highlight-background: rgba(255, 255, 255, 0) !important;
+  }
+  .item-interactive.ion-valid {
+    --highlight-background: rgba(255, 255, 255, 0) !important;
+  }
+}
+
+ion-label {
+  font-weight: bold;
+  color: var(--grey-medium);
+  font-size: 18px !important;
+  margin-bottom: 10px;
+}
+
+.form-invalid {
+  border-bottom: 1.9px solid var(--highlight-color-invalid);
+}
+
+.icon {
+  position: relative;
+  top: 42%;
+}
+
+.label-invalid{
+  color: var(--red);
+  font-weight: bold;
+  font-size: 18px !important;
+  margin-bottom: 10px;
+}
+
+.error-msg {
+  font-size: 10px;
+  color: var(--ion-color-danger);
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+.close-button{
+  align-self:flex-end;
+  margin-right: 8px;
+  margin-bottom: 10px;
+}
+.fields{
+  margin-bottom: 5px;
+}
+textarea{
+  width: 100%;
+  border: none;
+  margin-top: 10px;
+  outline: none;
+}

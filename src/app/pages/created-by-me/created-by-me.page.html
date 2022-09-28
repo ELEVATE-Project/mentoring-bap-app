@@ -1,0 +1,83 @@
+<app-page-header [config]="headerConfig">
+  <ion-searchbar class="top-padding" placeholder="Search session" debounce="500"
+    (ionChange)="onSearch($event)"></ion-searchbar>
+</app-page-header>
+<ion-content>
+  <ion-toolbar>
+    <ion-segment (ionChange)="segmentChanged($event)" [value]="type">
+      <ion-segment-button value="published,live">
+        <ion-label>{{ "UPCOMING" | translate }}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="completed">
+        <ion-label>{{ "PAST" | translate }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    <div class="sessions-wrap">
+      <div [ngSwitch]="type">
+        <div *ngSwitchCase="'published,live'">
+          <p class="session-listing-header">{{"UPCOMING_SESSIONS" | translate}}</p>
+          <div *ngIf="sessions?.length; else elseBlock">
+            <ion-list>
+              <div class="list">
+                <app-session-card-template *ngFor="let session of sessions" [buttonConfig]="buttonConfig"
+                  [data]="session" [showStart]=true (onClickEvent)="eventAction($event)">
+                </app-session-card-template>
+              </div>
+            </ion-list>
+          </div>
+        </div>
+        <div *ngSwitchCase="'completed'">
+          <p class="session-listing-header">{{"PAST_SESSIONS" | translate}}</p>
+          <div *ngIf="sessions?.length; else elseBlockTwo">
+            <ion-list>
+              <div class="list">
+                <app-session-card-template *ngFor="let session of sessions" [data]="session" [showStart]=false>
+                </app-session-card-template>
+              </div>
+            </ion-list>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #elseBlock>
+      <div *ngIf="!loading">
+        <ion-card class="sessions-wrap" (click)="createSession()">
+          <ion-card-content>
+            <ion-row>
+              <ion-col size="2">
+                <ion-icon name="add-outline" size="large"></ion-icon>
+              </ion-col>
+              <ion-col size="10">
+                <h5>
+                  {{"CREATE_NEW_SESSION" | translate}}
+                </h5>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ng-template>
+    <ng-template #elseBlockTwo>
+      <div *ngIf="!loading" class="main-wrapper">
+        <p class="no-details-message">{{ "NO_PAST_SESSIONS_FOUND" | translate }}</p>
+      </div>
+    </ng-template>
+  </ion-toolbar>
+  <ion-fab *ngIf="sessions?.length;" vertical="bottom" horizontal="end" slot="fixed" class="fabs">
+    <ion-fab-button (click)="createSession()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-label>{{"NEW_SESSION"|translate}}</ion-label>
+  </ion-fab>
+</ion-content>
+<div *ngIf="showLoadMoreButton;else footerElseBlock">
+  <ion-footer class="ion-no-border">
+    <ion-button (click)="loadMore()" expand="full">
+      {{"LOAD MORE" | translate}}</ion-button>
+  </ion-footer>
+</div>
+<ng-template #footerElseBlock>
+  <ion-footer class="ion-no-border">
+    <ion-button (click)="goToHome()" expand="full">{{"HOME" | translate}}</ion-button>
+  </ion-footer>
+</ng-template>

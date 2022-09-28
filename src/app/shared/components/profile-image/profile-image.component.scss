@@ -1,0 +1,35 @@
+.thumbnail-image{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.username {
+    font-size: 19px;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+}
+.region{   
+    font-size: 16px;
+    text-align: center;
+    margin: 4px;
+    font-weight: 600;
+}
+.join-button{
+    display: flex;
+    justify-content: center; 
+}
+.padding{
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+.text-config{
+    color: rgb(87, 95, 116);
+    font-weight: 900;
+}
+.add-image-button{
+    display: flex;
+    justify-self: center;
+    width: 50%;
+    color: black;
+}

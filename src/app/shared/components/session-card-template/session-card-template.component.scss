@@ -1,0 +1,38 @@
+
+.mentor-card{
+    padding: 8px 8px 10px 10px;
+    height: 80px;
+    .date-box{
+        font-size: 18px;
+        text-align: center;
+        justify-content: center;
+        font-weight: 800;
+    }
+    .action-box{
+        color:var(--ion-color-primary);
+    }
+    .icon-top-margin{
+        margin-top: 10px ;
+    }
+}
+
+.session-status{
+    margin-top: 0px;
+    padding: 0px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.container {
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-weight: 600;
+}
+.text-colour-black{
+    color: rgb(77, 74, 74);
+}

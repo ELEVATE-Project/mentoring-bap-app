@@ -1,0 +1,8 @@
+<div *ngIf="label" class="feedback-question">
+  <strong>{{label}}</strong>
+</div>
+<div [ngClass]="{'disable': isDisabled , 'star-align': !isDisabled}">
+  <div *ngFor="let star of range;let i=index">
+    <ion-icon [ngClass]="{'star-small': isDisabled , 'star': !isDisabled}" [name]=" i>=rate ? 'star-outline':'star'"  (click)="onRate(i+1)"></ion-icon>
+  </div>
+</div>
