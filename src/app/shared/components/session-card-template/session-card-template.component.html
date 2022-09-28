@@ -1,0 +1,31 @@
+<ion-card class="mentor-card" (click)="onCardClick(data)">
+  <ion-card-content class="ion-no-padding">
+    <ion-row class="d-flex flex-justify-center flex-align-items-center">
+      <ion-col size=2 class="date-box">
+        <div class="text-colour-black">{{data?.startDate | date: 'dd'}}</div>
+        <div class="text-colour-black">{{data?.startDate | date: 'ccc'}}</div>
+      </ion-col>
+      <ion-col size=5>
+        <div class="full-width">
+            <div class="ellipsis title text-colour-black">
+              {{data?.title}}
+            </div>
+          <ion-card-subtitle class="session-status">
+            {{data?.status | titlecase}}
+          </ion-card-subtitle>
+        </div>
+      </ion-col>
+      <ion-col size=4 class="action-box d-flex flex-justify-center " *ngIf="buttonConfig;else elseBlock">
+        <ion-button [disabled]="data.status=='completed'" shape="round" (click)="$event.stopPropagation(); onAction(data, 'data selected')">
+          {{buttonConfig?.label | translate}}</ion-button>
+      </ion-col>
+      <ng-template #elseBlock>
+        <ion-col size=4 class="action-box">
+        </ion-col>
+      </ng-template>
+      <ion-col size=1 class="action-box icon-top-margin">
+        <ion-icon name="caret-forward-outline" color="primary"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>
