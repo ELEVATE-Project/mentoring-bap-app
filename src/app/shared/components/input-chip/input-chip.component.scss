@@ -1,0 +1,18 @@
+.selected-chip{
+    --background:var(--ion-color-primary);
+    --color:var(--white);
+}
+.toggle{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.head-label{
+    font-weight: bold;
+    color: var(--grey-medium);
+    font-size: 14px !important;
+    overflow: visible !important;
+ }
+.icon{
+    font-size: smaller;
+}
