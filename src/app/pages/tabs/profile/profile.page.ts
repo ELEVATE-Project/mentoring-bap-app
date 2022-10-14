@@ -89,7 +89,7 @@ export class ProfilePage implements OnInit {
     };
     try {
       let data = await this.httpService.get(config);
-      (!_.isEqual(data, {})) ? await this.setEnrolledSessions(data) : null;
+      this.enrolledSessions = (!_.isEqual(data, {})) ? await this.setEnrolledSessions(data) : [];
       await this.loaderService.stopLoader();
     }
     catch (error) {
@@ -123,7 +123,7 @@ export class ProfilePage implements OnInit {
         enrolled = enrolled.concat(sessionData)
       });
     }
-    this.enrolledSessions = enrolled;
+    return enrolled;
   }
 
   async fetchProfileDetails() {
@@ -140,11 +140,11 @@ export class ProfilePage implements OnInit {
   }
 
   async doRefresh(event) {
-    var result = await this.profileService.getProfileDetailsFromAPI(this.user.isAMentor, this.user._id);
-    if (result) {
-      this.formData.data = result;
-      this.formData.data.emailId = result.email.address;
-    }
+    // var result = await this.profileService.getProfileDetailsFromAPI(this.user.isAMentor, this.user._id);
+    // if (result) {
+    //   this.formData.data = result;
+    //   this.formData.data.emailId = result.email.address;
+    // }
     event.target.complete();
   }
 

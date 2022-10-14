@@ -41,10 +41,13 @@
                             </div>
                         </div>
                         <div *ngSwitchCase="'enrolled'">
-                            <ion-list *ngIf="enrolledSessions">
+                            <ion-list *ngIf="enrolledSessions?.length">
                                 <app-session-card *ngFor="let session of enrolledSessions" [data]="session" (onClickEvent)="onAction($event)">
                                 </app-session-card>
                             </ion-list>
+                            <div *ngIf="!enrolledSessions?.length">
+                                <p class="no-details-message">{{ "NO_SESSIONS_ENROLLED" | translate }}</p>
+                              </div>
                         </div>
                     </div>
                 </div>
