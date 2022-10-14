@@ -23,25 +23,10 @@ export class SessionCardComponent implements OnInit {
   constructor(private router: Router, private sessionService: SessionService, private toast: ToastService, private localStorage: LocalStorageService) { }
   
   async ngOnInit() {
-    this.isCreator = await this.checkIfCreator();
-    this.setButtonConfig(this.isCreator);
-    this.startDate = (this.data.startDate>0)?moment.unix(this.data.startDate).toLocaleString():this.startDate;
-    this.endDate = (this.data.endDate>0)?moment.unix(this.data.endDate).toLocaleString():this.endDate;
-  }
- 
-  setButtonConfig(isCreator: boolean) {
-    if(isCreator){
-      this.buttonConfig={label:"START",type:"startAction"};
-    } else {
-      this.buttonConfig=(!isCreator&&this.data.isEnrolled || !isCreator&&this.data.sessionId)?{label:"JOIN",type:"joinAction"}:{label:"ENROLL",type:"enrollAction"};
+    if(this.data.startDate){
+      this.startDate = new Date(this.data.startDate).toLocaleString();
+      console.log(this.startDate)
     }
-    let currentTimeInSeconds=Math.floor(Date.now()/1000);
-    this.buttonConfig.isEnabled = (this.data.startDate-currentTimeInSeconds<300)?true:false;
-  }
-
-  async checkIfCreator() {
-    this.userData = await this.localStorage.getLocalData(localKeys.USER_DETAILS)
-    return (this.data.userId == this.userData._id) ?true : false;
   }
  
   onCardClick(data) {
@@ -50,13 +35,5 @@ export class SessionCardComponent implements OnInit {
       type: 'cardSelect',
     }
     this.onClickEvent.emit(value)
-  }
-
-  onButtonClick(data,type){
-    let value = {
-      data: data,
-      type:type
-    }
-    this.userData.about?this.onClickEvent.emit(value):this.router.navigate([`/${CommonRoutes.EDIT_PROFILE}`]);
   }
 }

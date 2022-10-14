@@ -10,8 +10,9 @@
     height: 30px;
 }
 .title-font{
-    font-size: 19px;
-    margin-top: 25px;
+    margin: 7px;
+    font-weight: bold;
+    font-size: 21px;
 }
 .field-wrapper{
     margin: 5px 10px 0px 15px;
@@ -20,7 +21,7 @@
     }
 }
 .description{
-    margin-top: 10px;
+    margin-top: 0px;
     margin-bottom: 10px;
     ::first-letter {
         text-transform: uppercase;
@@ -40,4 +41,8 @@ img{
     width: 93%;
     border-radius: 10px;
     height: 220px;
+}
+ion-badge{
+    padding: 5px;
+    margin: 12px 5px 5px 0px;
 }

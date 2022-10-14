@@ -11,7 +11,9 @@ export class MentorCardComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.data)
+  }
 
   onCardClick(data) {
     let value = {

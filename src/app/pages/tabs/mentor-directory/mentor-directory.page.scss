@@ -1,11 +1,18 @@
-.index-label{
-    border-top: 1px solid var(--gray);
-    padding: 10px 15px;
-    margin: 40px 15px 15px 10px;
-    border-bottom: 1px solid var(--gray);
-    font-weight: 600;
+.no-data-div{
+    text-align: center;
+    height: 75%;
+    margin-top: 25%;
 }
-.search-style{
-    --border-radius: 10px;
-    padding: 5px 0px;
-  }
+.content-label{
+    font-size: 22px;
+    color: var(--ion-color-primary);
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.search-bar{
+    --border-radius:25px;
+    --icon-color:var(--ion-color-primary);
+    font-size:16px;
+    margin-top: 6px;
+    height: fit-content;
+}

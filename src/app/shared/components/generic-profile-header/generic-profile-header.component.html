@@ -9,10 +9,14 @@
       </div>
     </ion-col>
     <ion-col size="8" class="details-wrapper">
-      <div>
+      <div *ngIf="headerData?.providerName && headerData?.bppName">
+        <ion-label class="name">{{headerData?.providerName}}, {{headerData?.bppName}}</ion-label>
+      </div>
+      <div *ngIf="headerData?.isAMentee">
         <ion-label *ngIf="headerData?.name" class="name">{{headerData?.name}} </ion-label>
-        <ion-label *ngIf="showRole&&headerData?.isAMentor" class="role ellipsis">({{"MENTOR"|translate}})</ion-label>
-        <ion-label *ngIf="showRole&&!headerData?.isAMentor" class="role ellipsis">({{"MENTEE"|translate}})</ion-label>
+      </div>
+      <div *ngIf="headerData?.boards">
+        <ion-label *ngFor="let board of headerData?.boards">{{board}}  </ion-label>
       </div>
       <div class="d-inline-flex flex-align-items-center my-4" *ngIf="headerData?.location?.length">
         <ion-icon name="location"></ion-icon>

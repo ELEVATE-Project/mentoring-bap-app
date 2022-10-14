@@ -21,4 +21,4 @@ import { CoreModule } from 'src/app/core/core.module';
   ],
   declarations: [HomePage],
 })
-export class Tab1PageModule {}
+export class HomePageModule {}

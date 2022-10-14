@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { JsonFormData } from 'src/app/shared/components/dynamic-form/dynamic-form.component';
 import { CommonRoutes } from 'src/global.routes';
 import { ModalController, NavController, Platform } from '@ionic/angular';
@@ -10,8 +10,25 @@ import { ProfileService } from 'src/app/core/services/profile/profile.service';
 import { HttpService, LoaderService, LocalStorageService, ToastService, UserService, UtilService } from 'src/app/core/services';
 import { urlConstants } from 'src/app/core/constants/urlConstants';
 import { SessionService } from 'src/app/core/services/session/session.service';
-import { Location } from '@angular/common';
 import { TermsAndConditionsPage } from '../../terms-and-conditions/terms-and-conditions.page';
+interface sessionData {
+  itemId: string;
+  fulfillmentId: string;
+  title: string;
+  description: string;
+  image: string;
+  status: string;
+  startDate: string;
+  endDate: string;
+  isEnrolled: boolean;
+  mentorName: string;
+  recommendedFor: string[];
+  categories: Array<string>;
+  medium: string[];
+  providerName: string;
+  bppName: string;
+  context: object;
+} 
 
 @Component({
   selector: 'app-home',
@@ -39,6 +56,12 @@ export class HomePage implements OnInit {
   public mentorSegmentButton = ["created-sessions"]
   selectedSegment = "all-sessions";
   createdSessions: any;
+  searchText: string = "";
+  categories = [];
+  providersItems = [];
+  fulfillments = [];
+  isAMentor: any;
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -50,7 +73,7 @@ export class HomePage implements OnInit {
     private modalController: ModalController,
     private userService: UserService,
     private localStorage: LocalStorageService,
-    private toast:ToastService) { }
+    private toast: ToastService) { }
 
   ngOnInit() {
     this.getUser();
@@ -62,27 +85,27 @@ export class HomePage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    this.getSessions();
-    var obj = { page: this.page, limit: this.limit, searchText: "" };
-    this.createdSessions = await this.sessionService.getAllSessionsAPI(obj);
+    // this.getSessions();
+    // var obj = { page: this.page, limit: this.limit, searchText: "" };
+    // this.createdSessions = await this.sessionService.getAllSessionsAPI(obj);
   }
   async eventAction(event) {
     switch (event.type) {
       case 'cardSelect':
-        (this.selectedSegment=="my-sessions")?this.router.navigate([`/${CommonRoutes.SESSIONS_DETAILS}/${event.data.sessionId}`]):this.router.navigate([`/${CommonRoutes.SESSIONS_DETAILS}/${event.data._id}`]);
+        this.router.navigate([`/${CommonRoutes.SESSIONS_DETAILS}/`], {state: {data: event.data}});
         break;
 
       case 'joinAction':
-        (event.data.sessionId)?await this.sessionService.joinSession(event.data.sessionId):await this.sessionService.joinSession(event.data._id);
+        (event.data.sessionId) ? await this.sessionService.joinSession(event.data.sessionId) : await this.sessionService.joinSession(event.data._id);
         this.getSessions();
         break;
 
       case 'enrollAction':
-        let enrollResult = await this.sessionService.enrollSession(event.data._id);
-        if(enrollResult.result){
-          this.toast.showToast(enrollResult.message, "success")
-          this.getSessions();
-        }
+        // let enrollResult = await this.sessionService.enrollSession();
+        // if (enrollResult.result) {
+        //   this.toast.showToast(enrollResult.message, "success")
+        //   this.getSessions();
+        // }
         break;
 
       case 'startAction':
@@ -95,12 +118,11 @@ export class HomePage implements OnInit {
     this.router.navigate([`/${CommonRoutes.SESSIONS}`], { queryParams: { type: data } });
   }
 
-  search() {
-    this.router.navigate([`/${CommonRoutes.HOME_SEARCH}`]);
-  }
   getUser() {
     this.profileService.profileDetails().then(data => {
       this.user = data
+      this.isAMentor = this.user.isAMentor;
+      console.log(this.isAMentor,data)
       if (!this.user?.hasAcceptedTAndC) {
         this.openModal();
       }
@@ -137,5 +159,83 @@ export class HomePage implements OnInit {
     } else {
       this.router.navigate([`/${CommonRoutes.TABS}/${CommonRoutes.PROFILE}`]);
     }
+  }
+  checkInput() {
+    this.searchText = this.searchText.replace(/^ +/gm, '')
+  }
+
+  async search() {
+    let sessionData = await this.getSessionsFromBAPServer();
+    this.arrangeSessionDetails(sessionData);
+  }
+  async getSessionsFromBAPServer() {
+    await this.loaderService.startLoader();
+    this.categories = this.providersItems = this.fulfillments = [];
+    const config = {
+      url: urlConstants.API_URLS.SEARCH_SESSION + this.searchText
+    };
+    try {
+      let data: any = await this.httpService.get(config);
+      if(Array.isArray(data.data)){
+        await this.loaderService.stopLoader();
+        return data.data;
+      }else{
+        await this.loaderService.stopLoader();
+        throw Error();
+      }
+    }
+    catch (error) {
+      await this.loaderService.stopLoader();
+    }
+  }
+
+  arrangeSessionDetails(dataArray: any[]) {
+    dataArray.forEach( bppData => {
+      this.categories = this.categories.concat(bppData.message.catalog['bpp/categories']);
+      bppData.message.catalog['bpp/providers'].forEach(provider => {
+        provider.items.map(item => {
+          item.context = bppData.context;
+          item.providerName = provider.descriptor.name;
+          item.bppName = bppData.message.catalog['bpp/descriptor'].name;
+        })
+        this.providersItems = this.providersItems.concat(provider.items);
+      })
+      this.fulfillments = this.fulfillments.concat(bppData.message.catalog['fulfillments']);
+    });
+    this.mapSessionDetails().then((sessions)=>{
+      this.sessions = sessions;
+    })
+  }
+
+
+  mapSessionDetails(): Promise<Array<object>> {
+    return new Promise((resolve, reject) => {
+      let sessions = [];
+      this.providersItems.forEach( session => {
+        let categories = [];
+        let fulfillment = this.fulfillments.find(element => element.id === session.fulfillment_id)
+        categories = categories.concat(this.categories.find(element => element.id === session.category_id).descriptor.name)
+        let sessionData: sessionData = {
+          itemId: session.id,
+          fulfillmentId: fulfillment.id,
+          title: session.descriptor.name,
+          description: session.descriptor.long_desc,
+          image: session.descriptor.images[0],
+          status: fulfillment.tags.status,
+          startDate: fulfillment.start.time.timestamp,
+          endDate: fulfillment.end.time.timestamp,
+          isEnrolled: false,
+          mentorName: fulfillment.agent.name,
+          recommendedFor: session.tags.recommended_for,
+          categories: categories,
+          medium: fulfillment.language,
+          providerName: session.providerName,
+          bppName: session.bppName,
+          context: session.context
+        }
+        sessions = sessions.concat(sessionData);
+      })
+      resolve(sessions)
+    })
   }
 }

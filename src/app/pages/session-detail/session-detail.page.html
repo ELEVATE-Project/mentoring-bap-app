@@ -8,13 +8,13 @@
       </ng-template>
     </div>
     <div class="field-wrapper">
-      <h6 class="title-font">{{detailData?.data?.title}}</h6>
+      <ion-badge>{{detailData?.data?.providerName}}</ion-badge><ion-badge>{{detailData?.data?.bppName}}</ion-badge>
       <p class="description">{{detailData?.data?.description}}</p>
       <ion-item class="ion-no-padding" lines="none">
         <ion-icon class="calendar-icon" name="calendar-number-outline"></ion-icon>
-        <ion-label *ngIf="startDate && detailData?.data?.status=='published'" class="date-label">{{"STARTS_ON"|translate}} {{startDate|date:'dd/MM/yyyy'}} {{"AT"|translate}} {{startDate|date:'shortTime'}}</ion-label>
-        <ion-label *ngIf="startDate && detailData?.data?.status=='live'" class="date-label">{{"STARTED_ON"|translate}} {{startDate|date:'dd/MM/yyyy'}} {{"AT"|translate}} {{startDate|date:'shortTime'}}</ion-label>
-        <ion-label *ngIf="endDate && detailData?.data?.status=='completed'" class="date-label">{{"COMPLETED_ON"|translate}} {{endDate|date:'dd/MM/yyyy'}} {{"AT"|translate}} {{endDate|date:'shortTime'}}</ion-label>
+        <ion-label class="date-label">{{"STARTS_ON"|translate}} {{startDate|date:'dd/MM/yyyy'}} {{"AT"|translate}} {{startDate|date:'shortTime'}}</ion-label>
+        <!-- <ion-label *ngIf="startDate && detailData?.data?.status=='live'" class="date-label">{{"STARTED_ON"|translate}} {{startDate|date:'dd/MM/yyyy'}} {{"AT"|translate}} {{startDate|date:'shortTime'}}</ion-label>
+        <ion-label *ngIf="endDate && detailData?.data?.status=='completed'" class="date-label">{{"COMPLETED_ON"|translate}} {{endDate|date:'dd/MM/yyyy'}} {{"AT"|translate}} {{endDate|date:'shortTime'}}</ion-label> -->
       </ion-item>
     </div>
     <app-generic-details [sessionData]='detailData'></app-generic-details>
@@ -26,14 +26,14 @@
       (click)="onStart(detailData?.data)">{{"START_SESSIONS" | translate}}</ion-button>
   </div>
   <ng-template #elseBlockFooter>
-    <div *ngIf="!detailData?.data?.isEnrolled && detailData?.data?.status!='completed'">
-      <ion-button class="load-more-button" expand="full" (click)="onEnroll()">{{"ENROLL" | translate}}</ion-button>
+    <div *ngIf="!isEnrolled">
+      <ion-button class="load-more-button" expand="full" (click)="checkAvailability(detailData?.data)">{{"CHECK_AVALABILITY" | translate}}</ion-button>
     </div>
-    <div *ngIf="detailData?.data?.isEnrolled && detailData?.data?.status==='published' && !isEnabled">
-      <ion-button class="load-more-button" expand="full" (click)="onCancel()">{{"UN_ENROLL" | translate}}</ion-button>
+    <div *ngIf="isEnrolled">
+      <ion-button class="load-more-button" expand="full" (click)="onCancel(detailData?.data)">{{"UN_ENROLL" | translate}}</ion-button>
     </div>
-    <div *ngIf="detailData?.data?.isEnrolled && detailData?.data?.status!='completed' && isEnabled">
+    <!-- <div *ngIf="detailData?.data?.isEnrolled && detailData?.data?.status!='completed' && isEnabled">
       <ion-button class="load-more-button" expand="full" (click)="onJoin()">{{"JOIN" | translate}}</ion-button>
-    </div>
+    </div> -->
   </ng-template>
 </ion-footer>

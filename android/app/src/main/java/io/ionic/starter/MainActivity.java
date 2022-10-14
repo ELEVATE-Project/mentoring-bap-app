@@ -1,4 +1,4 @@
-package org.elevate.mentoring;
+package org.elevate.mentoring.bap;
 
 import com.getcapacitor.BridgeActivity;
 import android.webkit.WebSettings;

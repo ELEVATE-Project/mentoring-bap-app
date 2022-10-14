@@ -103,10 +103,10 @@ async getSessionsList(obj) {
     }
   }
 
-  async enrollSession(id) {
+  async enrollSession(body) {
     const config = {
-      url: urlConstants.API_URLS.ENROLL_SESSION + id,
-      payload: {}
+      url: urlConstants.API_URLS.ENROLL_CONFIRM,
+      payload: body
     };
     try {
       let data = await this.httpService.post(config);
@@ -116,10 +116,10 @@ async getSessionsList(obj) {
     }
   }
 
-  async unEnrollSession(id) {
+  async unEnrollSession(body) {
     const config = {
-      url: urlConstants.API_URLS.UNENROLL_SESSION + id,
-      payload: {}
+      url: urlConstants.API_URLS.ENROLL_CANCEL,
+      payload: body
     };
     try {
       let data = await this.httpService.post(config);
@@ -219,4 +219,16 @@ async getSessionsList(obj) {
     }
   }
 
+  async getEnrollStatus(body){
+    const config = {
+      url: urlConstants.API_URLS.USER_ENROLL_STATUS,
+      payload: body
+    };
+    try {
+      let data = await this.httpService.post(config);
+      return data;
+    }
+    catch (error) {
+    }
+  }
 }

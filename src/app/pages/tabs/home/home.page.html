@@ -3,34 +3,26 @@
     <h3>
       {{'WELCOME'| translate}} {{ user?.name }}!
     </h3>
-    <ion-col class="welcome-note" size="12">{{'WELCOME_NOTE' | translate}}</ion-col>
-    <ion-col size="12" class="ion-no-padding">
-      <div>
-        <ion-searchbar class="search-bar" placeholder="{{'HOME_SEARCH_PLACEHOLDER' | translate}}" (click)="search()">
+    <ion-col *ngIf="!isAMentor" class="welcome-note" size="12">{{'WELCOME_NOTE' | translate}}</ion-col>
+    <ion-col *ngIf="isAMentor" class="welcome-note" size="12">{{'WELCOME_MENTOR' | translate}}</ion-col>
+    <ion-col *ngIf="!isAMentor" size="12" class="ion-no-padding">
+      <div class="d-flex">
+        <ion-searchbar class="search-bar ion-margin-top" placeholder="{{'HOME_SEARCH_PLACEHOLDER' | translate}}"
+          [(ngModel)]="searchText" (ionChange)="search()" debounce="1000">
         </ion-searchbar>
       </div>
     </ion-col>
   </ion-row>
 </app-page-header>
-<div class="page-intro segment-wrapper">
-  <div class="d-flex segment-wrapper">
-    <div class="segment-div" *ngFor="let segment of segmentButtons;">
-      <ion-button
-        *ngIf="!mentorSegmentButton.includes(segment.name) || (mentorSegmentButton.includes(segment.name)&&user?.isAMentor)"
-        [ngClass]="{'font-bold': (selectedSegment==segment?.name) , 'segment-button': (selectedSegment!=segment?.name)}"
-        fill="outline" (click)="segmentChanged(segment)">{{segment?.label|translate}}</ion-button>
-    </div>
-  </div>
-</div>
 <ion-content>
-  <div *ngIf="sessions&&(selectedSegment=='all-sessions')">
-    <div class="my-10" *ngFor="let session of sessions?.allSessions">
+  <div *ngIf="!isAMentor && sessions">
+    <div class="my-10" *ngFor="let session of sessions">
       <app-session-card [data]="session" (onClickEvent)="eventAction($event)">
       </app-session-card>
     </div>
   </div>
-  <div *ngIf="(selectedSegment=='created-sessions')&&user?.isAMentor">
-    <ion-card *ngIf="createdSessions?.data?.length" class="session-sqr-card">
+  <div *ngIf="isAMentor" class="mentor-div">
+    <ion-card class="session-sqr-card">
       <ion-card-content class="card-content">
         <div class="segment-button d-flex flex-justify-center flex-align-items-flex-end">
           {{"START_CREATE_SESSION"|translate}}
@@ -40,53 +32,10 @@
         </ion-button>
       </ion-card-content>
     </ion-card>
-    <div *ngIf="createdSessions?.data?.length">
-      <ion-label class="font-bold section-header">{{"CREATED_SESSIONS"|translate}}</ion-label>
-      <div *ngFor="let session of createdSessions?.data">
-        <app-session-card [data]="session" (onClickEvent)="eventAction($event)">
-        </app-session-card>
-      </div>
-    </div>
-    <div *ngIf="!createdSessions?.data?.length">
-      <app-no-data-found [messageHeader]="'NO_SESSIONS_CREATED'" [messageDescription]="'START_CREATING_SESSION'">
-      </app-no-data-found>
-      <div class="d-flex flex-justify-center">
-        <ion-button shape="round" strong="true" class="card-button" (click)="createSession()">
-          {{'CREATE_SESSION' | translate}} <ion-icon class="create-icon" name="add-circle-outline"></ion-icon>
-        </ion-button>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="sessions&&(selectedSegment=='my-sessions')">
-    <div *ngIf="sessions && sessions?.mySessions?.length">
-      <ion-label class="font-bold section-header">{{"ENROLLED_SESSIONS"|translate}}</ion-label>
-      <div class="my-10" *ngFor="let session of sessions?.mySessions">
-        <app-session-card [data]="session" (onClickEvent)="eventAction($event)">
-        </app-session-card>
-      </div>
-    </div>
-    <!-- <div *ngIf="sessions?.mySessions?.length">
-      <div class="page-intro">
-        <h5>
-          {{"MY_SESSIONS" | translate}}
-        </h5>
-        <ion-button color="primary" size="small" shape="round" class="ion-margin-top ion-text-capitalize"
-          (click)="viewMore('my-sessions')">
-          {{"VIEW_MORE" | translate}}<ion-icon name="caret-forward-outline"></ion-icon>
-        </ion-button>
-      </div>
-      <ion-row>
-        <ion-col size="6" *ngFor="let session of sessions?.mySessions">
-          <app-session-sqr-card [data]="session" (onClickEvent)="eventAction($event)"> </app-session-sqr-card>
-        </ion-col>
-      </ion-row>
-    </div> -->
-    <div *ngIf="sessions && !sessions?.mySessions.length">
-      <app-no-data-found [messageHeader]="'NO_SESSIONS_ENROLLED'" [messageDescription]="'CHECK_ALLSESSION_TO_ENROLL'">
-      </app-no-data-found>
-    </div>
-  </div>
-  <div *ngIf="!sessions">
-    <app-skeleton [type]="SKELETON.HOME_SKELETON" [repetition]="4"></app-skeleton>
   </div>
 </ion-content>
+<div *ngIf="!isAMentor && !sessions" class="no-data-div">
+  <div>
+    <p class="content-label">{{ "HOME_SEARCH_LABEL" | translate }}</p>
+  </div>
+</div>

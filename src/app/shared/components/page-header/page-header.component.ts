@@ -11,7 +11,9 @@ export class PageHeaderComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("page header",this.config)
+  }
 
   onAction(event) {
     this.actionEvent.next(event);

@@ -57,7 +57,7 @@ export class HttpService {
     return this.http.post(this.baseUrl + requestParam.url, body, headers)
       .then((data: any) => {
         let result: any = JSON.parse(data.data);
-        if (result.responseCode === "OK") {
+        if (data.status === 200) {
           return result;
         }
       }, error => {
@@ -78,9 +78,7 @@ export class HttpService {
         if(result?.meta?.data?.length){
           this.openModal(result?.meta?.data[0]);
         }
-        if (result.responseCode === "OK") {
-          return result;
-        }
+        return result;
       }, error => {
         return this.handleError(error);
       });

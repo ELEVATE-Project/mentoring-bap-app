@@ -1,5 +1,5 @@
 {
-	"appId": "org.elevate.mentoring",
+	"appId": "org.elevate.mentoring.bap",
 	"appName": "MentorED",
 	"webDir": "www",
 	"bundledWebRuntime": false,

@@ -4,7 +4,7 @@
     overflow: scroll;
 }
 h3{
-    margin: 10px 0px 10px 5px;
+    margin: 6px 0px 6px 5px;
     font-size: 24px;
 }
 .welcome-note{
@@ -14,8 +14,12 @@ h3{
     --border-radius:25px;
     --icon-color:var(--ion-color-primary);
     font-size:16px;
-    margin-top: 10px;
+    margin-top: 6px;
     height: fit-content;
+}
+.searchbar-input.sc-ion-searchbar-md{
+    padding-right: 25px;
+    padding-left: 50px;
 }
 .segment-wrapper{
     padding: 8px 20px 0px 3px;
@@ -69,4 +73,48 @@ h3{
 .section-header{
     margin: 8px 0px 12px 10px;
     letter-spacing: 1px;
+}
+.no-data-div{
+    text-align: center;
+    height: 75%;
+    margin-top: 25%;
+}
+.content-label{
+    font-size: 22px;
+    color: var(--ion-color-primary);
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.segment-button{
+    --border-radius:25px;
+    color: black;
+    --border-color:var(--gray);
+    height: 45px;
+    font-size: large;
+}
+.session-sqr-card{
+    text-align: center;
+    padding-bottom: 4px;
+    margin-bottom: 40px;
+    border-radius: 10px;
+}
+.card-button{
+    --background:rgb(53, 120, 184);
+    width: 85% !important;
+    font-weight: bold;
+    height: 43px;
+    font-size: larger;
+    margin-top: 13px;
+}
+.mentor-div{
+    height: 75%;
+    margin-top: 14%;
+}
+.font-bold{
+    --border-radius:25px;
+    font-weight: bold;
+    color: black;
+    --border-color:var(--ion-color-primary);
+    height: 45px;
+    font-size: small;
 }

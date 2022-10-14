@@ -19,7 +19,7 @@ export class ToastService {
         let toast = await this.toastCtrl.create({
             message: texts[msg],
             color:color,
-            duration: 5000,
+            duration: 3000,
             position: 'top',
           });
           toast.present();
