@@ -116,9 +116,9 @@ export class ProfilePage implements OnInit {
           recommendedFor: item.item.items[0].tags.recommended_for,
           categories: [item.category.descriptor.name],
           medium: item.fulfillment.language,
-          // providerName: item.item.items[0].providerName,
-          // bppName: item.item.items[0].bppName,
-          // context: item.item.items[0].context
+          providerName: item.item.descriptor.name,
+          bppName: item.bpp.name,
+          context: {bpp_uri:key}
         }
         enrolled = enrolled.concat(sessionData)
       });
