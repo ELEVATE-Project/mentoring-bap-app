@@ -89,7 +89,7 @@ export class ProfilePage implements OnInit {
     };
     try {
       let data = await this.httpService.get(config);
-      (!_.isEqual(data, {})) ? await this.setEnrolledSessions(data) : null;
+      this.enrolledSessions = (!_.isEqual(data, {})) ? await this.setEnrolledSessions(data) : [];
       await this.loaderService.stopLoader();
     }
     catch (error) {
@@ -116,14 +116,14 @@ export class ProfilePage implements OnInit {
           recommendedFor: item.item.items[0].tags.recommended_for,
           categories: [item.category.descriptor.name],
           medium: item.fulfillment.language,
-          // providerName: item.item.items[0].providerName,
-          // bppName: item.item.items[0].bppName,
-          // context: item.item.items[0].context
+          providerName: item.item.descriptor.name,
+          bppName: item.bpp.name,
+          context: {bpp_uri:key}
         }
         enrolled = enrolled.concat(sessionData)
       });
     }
-    this.enrolledSessions = enrolled;
+    return enrolled;
   }
 
   async fetchProfileDetails() {
@@ -140,11 +140,11 @@ export class ProfilePage implements OnInit {
   }
 
   async doRefresh(event) {
-    var result = await this.profileService.getProfileDetailsFromAPI(this.user.isAMentor, this.user._id);
-    if (result) {
-      this.formData.data = result;
-      this.formData.data.emailId = result.email.address;
-    }
+    // var result = await this.profileService.getProfileDetailsFromAPI(this.user.isAMentor, this.user._id);
+    // if (result) {
+    //   this.formData.data = result;
+    //   this.formData.data.emailId = result.email.address;
+    // }
     event.target.complete();
   }
 
